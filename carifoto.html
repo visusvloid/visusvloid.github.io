@@ -1,0 +1,78 @@
+<html>
+<head>
+  <style>
+    /* CSS untuk mengatur tampilan form input dan tombol submit */
+    #form {
+      margin: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    #input {
+      width: 300px;
+      height: 30px;
+      border: 1px solid black;
+      padding: 5px;
+    }
+
+    #submit {
+      width: 100px;
+      height: 40px;
+      margin-left: 10px;
+      background-color: blue;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* CSS untuk mengatur tampilan foto yang ditampilkan */
+    #foto {
+      margin: 20px;
+      width: 500px;
+      height: 300px;
+      border: 1px solid black;
+      display: none; /* Menyembunyikan foto secara default */
+    }
+  </style>
+</head>
+<body>
+  <!-- HTML untuk membuat form input dan tombol submit -->
+  <div id="form">
+    <input id="input" type="text" placeholder="Masukkan kata kunci atau password">
+    <button id="submit">Submit</button>
+  </div>
+  <!-- HTML untuk membuat tempat untuk menampilkan foto -->
+  <img id="foto" src="" alt="">
+  <!-- HTML untuk menyertakan jQuery dari CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Skrip jQuery untuk mengatur fungsi form input dan tombol submit -->
+  <script>
+    $(document).ready(function() {
+      // Menggunakan metode $.getJSON() untuk terhubung ke file json yang terpisah
+      $.getJSON("fotoso.json", function(data) {
+        // Fungsi yang akan dijalankan ketika tombol submit diklik
+        $("#submit").click(function() {
+          // Mendapatkan nilai dari form input
+          var kataKunci = $("#input").val();
+          // Menentukan sumber foto sesuai dengan kata kunci
+          var sumberFoto = "";
+          // Menggunakan metode $.each() untuk mengulangi setiap pasangan kata kunci dan sumber foto pada objek data
+          $.each(data, function(key, value) {
+            // Jika kata kunci yang dimasukkan sama dengan key, maka sumber foto sama dengan value
+            if (kataKunci == key) {
+              sumberFoto = value;
+            }
+          });
+          // Jika sumber foto masih kosong, maka kata kunci yang dimasukkan salah
+          if (sumberFoto == "") {
+            sumberFoto = data.else;
+          }
+          // Menampilkan foto sesuai dengan sumber foto
+          $("#foto").attr("src", sumberFoto);
+          $("#foto").show(); // Menampilkan foto yang sebelumnya disembunyikan
+        });
+      });
+    });
+  </script>
+</body>
+</html>
