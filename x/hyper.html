@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Single Page Example</title>
+</head>
+<body>
+
+  <h1>Halaman Utama</h1>
+  <button onclick="loadPage('page1.html')">Muat Halaman 1</button>
+  <button onclick="loadPage('page2.html')">Muat Halaman 2</button>
+
+  <div id="content-container">
+    <!-- Konten dari halaman akan dimuat di sini -->
+  </div>
+
+  <script>
+    function loadPage(pageUrl) {
+      // Menggunakan XMLHttpRequest untuk memuat halaman tanpa perlu me-refresh
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("content-container").innerHTML = this.responseText;
+        }
+      };
+      xhttp.open("GET", pageUrl, true);
+      xhttp.send();
+    }
+  </script>
+
+</body>
+</html>
