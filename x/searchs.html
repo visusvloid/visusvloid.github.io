@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Photo by Keyword</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+<label for="keyword">Masukkan kata kunci: </label>
+<input type="text" id="keyword">
+<button id="searchBtn">Cari Foto</button>
+
+<div id="photoContainer">
+    <!-- Foto akan ditampilkan di sini -->
+</div>
+
+<script>
+    $(document).ready(function(){
+        // URL untuk file JSON
+        var jsonFileUrl = 'fotos.json';
+
+        // Memuat file JSON secara asinkron
+        $.getJSON(jsonFileUrl, function(fotoJSON){
+            $('#searchBtn').on('click', function(){
+                // Mendapatkan kata kunci dari input
+                var keyword = $('#keyword').val().toLowerCase();
+
+                // Mencari URL foto sesuai dengan kata kunci
+                var photoURL = fotoJSON[keyword] || fotoJSON["else"];
+
+                // Menampilkan foto di dalam div dengan id "photoContainer"
+                $('#photoContainer').html('<img src="' + photoURL + '" alt="Foto">');
+            });
+        });
+    });
+</script>
+
+</body>
+  </html>
+  
